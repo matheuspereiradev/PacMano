@@ -3,6 +3,8 @@ package com.matheus.entidades;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import com.matheus.game.Jogo;
+import com.matheus.mundo.Camera;
 import com.matheus.mundo.Mundo;
 
 public class Jogador extends Entidade {
@@ -11,10 +13,14 @@ public class Jogador extends Entidade {
 	public int right_dir = 0, left_dir = 1, up_dir = 2, down_dir = 3;
 	public int ultimoClicado = down_dir;
 	
+	public BufferedImage jog;
+	
 	
 	public Jogador(int x, int y, int width, int height, BufferedImage sprite, int velocidade) {
 		super(x, y, width, height, sprite, velocidade);
 		depth=1;
+		
+		jog = Jogo.spritesheet.getSprite(48, 0, Jogo.tamanho, Jogo.tamanho);
 		
 	}
 
@@ -35,11 +41,13 @@ public class Jogador extends Entidade {
 			x += speed;
 		}
 		
+		atualizarCamera();
+		
 		
 	}
 
 	public void renderizar(Graphics g) {
-		
+		g.drawImage(jog, this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 
 }

@@ -83,7 +83,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	}
 
 	public void iniciarFrame() {
-		frame = new JFrame("The Prince's Journey v.2.0 by matheuslimadev.com");
+		frame = new JFrame("PacWoman");
 		frame.add(this);
 		
 		frame.setResizable(false);
