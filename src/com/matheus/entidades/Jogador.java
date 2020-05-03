@@ -20,7 +20,7 @@ public class Jogador extends Entidade {
 		super(x, y, width, height, sprite, velocidade);
 		depth=1;
 		
-		jog = Jogo.spritesheet.getSprite(48, 0, Jogo.tamanho, Jogo.tamanho);
+		jog = Jogo.spritesheet.getSprite(384, 16, Jogo.tamanho, Jogo.tamanho);
 		
 	}
 

@@ -36,57 +36,28 @@ public class Mundo {
 
 					if (tiles[atual] == null) {
 
-						if (Jogo.rand.nextInt(10) < 5) {
-							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR_2);
-						} else {
-							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
-						}
+						
+						tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
+						
 						// padrão é ser grama
 
 						if (pixels[atual] == 0xFF000000) {
 							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
 							// chao
-						} else if (pixels[atual] == 0xFFA85A91) {
-							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho,
-									Tile.TILE_FLOOR_TERRA_SUPERIOR_CENTRAL);
-						} else if (pixels[atual] == 0xFFFF91E7) {
-							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho,
-									Tile.TILE_FLOOR_TERRA_INFERIOR_CENTRAL);
-						} else if (pixels[atual] == 0xFF7C5C74) {
-							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho,
-									Tile.TILE_FLOOR_TERRA_VERTICAL_ESQUERDA);
-						} else if (pixels[atual] == 0xFF7A3D69) {
-							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho,
-									Tile.TILE_FLOOR_TERRA_VERTICAL_DIREITA);
-						} else if (pixels[atual] == 0xFF5C6277) {
-							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho,
-									Tile.TILE_FLOOR_TERRA_ESQUINA_SUPERIOR_DIREITA);
 						} else if (pixels[atual] == 0xFFFFFFFF) {
-							tiles[atual] = new WallTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_ARVORE);
+							tiles[atual] = new WallTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_WALL);
 							// parede
 						} else if (pixels[atual] == 0xFF2A00FF) {
 							Jogo.jogador.setX(xx * Jogo.tamanho);
 							Jogo.jogador.setY(yy * Jogo.tamanho);
 							// Jogo.jogador.setMask(1, 1, 15, 15);
 							// Jogador
-						} else if (pixels[atual] == 0xFFBC7BF2) {
-							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho,
-									Tile.TILE_FLOOR_TERRA_CENTRAL);
-							// areia
-						}  else if (pixels[atual] == 0xFF008048) {
-							criarTilesEmbaixoDaCasa(xx, yy, 2, 2);
-							objetos.add(new Objetos(xx * Jogo.tamanho, yy * Jogo.tamanho, Objetos.casa_32X32));
-						}else if (pixels[atual] == 0xFFFF63CD) {
-							criarTilesEmbaixoDaCasa(xx, yy, 5, 4);
-							objetos.add(new Objetos(xx * Jogo.tamanho, yy * Jogo.tamanho, Objetos.bar));
-						}else if (pixels[atual] == 0xFF7F3F76) {
-							criarTilesEmbaixoDaCasa(xx, yy, 4, 3);
-							if (Jogo.rand.nextInt(100) < 50) {
-								objetos.add(new Objetos(xx * Jogo.tamanho, yy * Jogo.tamanho, Objetos.casa_64X48_1));
-							} else {
-								objetos.add(new Objetos(xx * Jogo.tamanho, yy * Jogo.tamanho, Objetos.casa_64X48_2));
-							}
-						}
+						} else if (pixels[atual] == 0xFF89FFFD) {
+							Inimigo i =new Inimigo(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
+									Jogo.tamanho,Jogo.spritesheet.getSprite(64 , 32, Jogo.tamanho, Jogo.tamanho),1);
+							Jogo.entidades.add(i);
+							Jogo.inimigo.add(i);
+						} 
 					}
 				}
 			}

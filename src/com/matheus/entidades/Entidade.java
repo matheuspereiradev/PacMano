@@ -112,7 +112,7 @@ public class Entidade {
 	}
 
 	public void renderizar(Graphics g) {
-		g.drawImage(this.sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		//g.drawImage(this.sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 	
 	public double calcularDistancia(int x1,int x2,int y1,int y2) {
