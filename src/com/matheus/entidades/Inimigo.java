@@ -73,8 +73,10 @@ public class Inimigo extends Entidade {
 	
 	@Override
 	public void atualizar() {
-		buscarCaminhoAStar();
-		//buscarCaminhoSorteio();
+		if (Jogo.turno==Jogo.jogadorFugindo) {
+		    buscarCaminhoAStar();
+		}
+		
 		
 		if(indexMais<15) {
 			indexMais++;
@@ -122,14 +124,17 @@ public class Inimigo extends Entidade {
 	
 	@Override
 	public void renderizar(Graphics g) {
-		
-		if(movendo) {
-			if(direcao==dir_right) {
-				g.drawImage(andar_right[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-			}else if(direcao==dir_left) {
-				g.drawImage(andar_left[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-			}
-		};
+		if(Jogo.turno==Jogo.jogadorFugindo) {
+			if(movendo) {
+				if(direcao==dir_right) {
+					g.drawImage(andar_right[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+				}else if(direcao==dir_left) {
+					g.drawImage(andar_left[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+				}
+			};
+		}else if(Jogo.turno==Jogo.inimigoFugindo) {
+			g.drawImage(Entidade.SPRITE_FANTASMA, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		}
 		
 	}
 	

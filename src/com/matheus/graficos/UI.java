@@ -24,8 +24,9 @@ public class UI {
 	g.fillRect(12, 5, (int) ((Jogo.jogador.vida / Jogador.MAX_LIFE) * 82), 10);*/
 
 		g.setColor(Color.WHITE);
-		g.setFont(new Font("arial", Font.BOLD, 10));
-		g.drawString("Frutas restantes: "+Jogo.frutas.size(), 15, 25);
+		g.setFont(new Font("arial", Font.BOLD, 25));
+		g.drawString("Inimigos restantes: "+Jogo.inimigo.size(), 15, 35);
+		g.drawString("Frutas restantes: "+Jogo.frutas.size(), 15, 60);
 	}
 
 }

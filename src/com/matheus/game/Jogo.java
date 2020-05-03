@@ -3,6 +3,7 @@ package com.matheus.game;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import java.awt.event.KeyEvent;
@@ -43,6 +44,15 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	public static boolean mute = true;
 	public UI ui;
 	public int[] pixels, luzPixels;
+	public final static int jogadorFugindo=1;
+	public final static int inimigoFugindo=0;
+	public static int turno;
+	public int contadorTurno=0;
+	public static int modoJogo;
+	public final static int apresentacao=0,jogando=1, game_over=2,vitoria=3;
+	
+	public static int dificuldade;
+	public static final int facil=0, medio=1, dificil=2;
 	
 	
 	public Jogo() {
@@ -81,9 +91,28 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		jogador = new Jogador(0, 0, 16, 16, spritesheet.getSprite(0, 0, tamanho, tamanho),2);
 		entidades.add(jogador);
 		mundo = new Mundo("/nivel1.png");
-
+		turno=	jogadorFugindo;
+		
+		modoJogo=apresentacao;
+		dificuldade=facil;
 	}
 
+	public static void reiniciarJogo() {
+		Jogo.entidades.clear();
+		Jogo.inimigo.clear();
+		Jogo.frutas.clear();
+		
+		Jogo.entidades = new ArrayList<Entidade>();
+		Jogo.inimigo = new ArrayList<Inimigo>();
+		Jogo.frutas=new ArrayList<Fruta>();
+		spritesheet = new Spritesheet("/Spritesheet.png");
+		Jogo.jogador = new Jogador(0, 0, 16, 16, null,2);
+		Jogo.entidades.add(Jogo.jogador);
+		Jogo.mundo = new Mundo("/nivel1.png");
+		Jogo.turno=	Jogo.jogadorFugindo;
+		Jogo.modoJogo=jogando;
+	}
+	
 	public void iniciarFrame() {
 		frame = new JFrame("PacWoman");
 		frame.add(this);
@@ -97,13 +126,40 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 
 	public void atualizar() {
 	
-				for (int i = 0; i < entidades.size(); i++) {
-					Entidade e = entidades.get(i);
-					e.atualizar();
-				}
-
-			ui.atualizar();
+		if (modoJogo==jogando) {
+			for (int i = 0; i < entidades.size(); i++) {
+				Entidade e = entidades.get(i);
+				e.atualizar();
+		    }
 			
+			if(Jogo.frutas.size()==0 && turno==jogadorFugindo) {
+				Jogo.modoJogo=game_over;
+			}
+			
+			/////////////////////muda turno
+			if(dificuldade==facil) {
+				verificaTurno(120);
+			}else {
+				verificaTurno(50);
+			}
+			
+			
+		}
+
+		ui.atualizar();
+		
+		
+			
+	}
+	
+	public void verificaTurno(int total) {
+		if(turno==inimigoFugindo) {
+			contadorTurno++;
+			if(contadorTurno>total) {
+				contadorTurno=0;
+				turno=jogadorFugindo;
+			}
+		}
 	}
 
 	public void renderizar() {
@@ -128,8 +184,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		}
 		
 		
-
-		ui.renderizar(g);
+		
 
 		g.dispose();// limpar dados da imagem que nao foram usados
 		g = bs.getDrawGraphics();
@@ -138,7 +193,59 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 			// TELA COMUM
 		
 		// aqui para ficar em cima da imagem de background
-		
+        if(modoJogo==apresentacao) {
+        	g.setColor(Color.yellow);
+			g.setFont(new Font("arial", Font.BOLD, 70));
+			g.drawString("PACWOMAN!!!", 240, 150);
+			g.setColor(Color.white);
+			g.setFont(new Font("arial", Font.BOLD, 50));
+			g.drawString("Clique R para iniciar", 240, 370);
+			
+			if(dificuldade==facil) {
+				g.drawString("< FÁCIL >", 350, 300);
+			}else if(dificuldade==medio) {
+				g.drawString("< NORMAL >", 350, 300);
+			}else if (dificuldade==dificil){
+				g.drawString("< DIFICIL >", 350, 300);
+			}
+			
+		}else if(modoJogo==game_over) {
+			g.setColor(Color.yellow);
+			g.setFont(new Font("arial", Font.BOLD, 70));
+			g.drawString("PACWOMAN!!!", 240, 150);
+			g.setColor(Color.white);
+			g.setFont(new Font("arial", Font.BOLD, 50));
+			g.drawString("GAME OVER!", 300, 250);
+			g.drawString("Clique R para iniciar", 240, 370);
+			
+			if(dificuldade==facil) {
+				g.drawString("< FÁCIL >", 355, 320);
+			}else if(dificuldade==medio) {
+				g.drawString("< NORMAL >", 330, 320);
+			}else if (dificuldade==dificil){
+				g.drawString("< DIFICIL >", 350, 320);
+			}
+			
+		}else if(modoJogo==vitoria) {
+			g.setColor(Color.yellow);
+			g.setFont(new Font("arial", Font.BOLD, 70));
+			g.drawString("PACWOMAN!!!", 240, 150);
+			g.setColor(Color.white);
+			g.setFont(new Font("arial", Font.BOLD, 50));
+			g.drawString("VOCÊ VENCEU!", 300, 250);
+			g.drawString("Clique R para iniciar", 240, 370);
+			
+			if(dificuldade==facil) {
+				g.drawString("< FÁCIL >", 355, 320);
+			}else if(dificuldade==medio) {
+				g.drawString("< NORMAL >", 330, 320);
+			}else if (dificuldade==dificil){
+				g.drawString("< DIFICIL >", 350, 320);
+			}
+		}else {
+			ui.renderizar(g);
+		}
+        
 		bs.show();
 	}
 
@@ -219,9 +326,31 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
+			if(modoJogo==jogando) {
 			jogador.right = true;
+			}else {
+				dificuldade++;
+				if (dificuldade==dificil+1) {
+					dificuldade=facil;
+				}
+			}
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-			jogador.left = true;
+			if(modoJogo==jogando) {
+				jogador.left = true;
+				}else {
+					dificuldade--;
+					if (dificuldade==facil-1) {
+						dificuldade=dificil;
+					}
+				}
+		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_R) {
+			if (modoJogo==game_over|| modoJogo==vitoria) {
+				reiniciarJogo();
+			}else if(modoJogo==apresentacao) {
+				modoJogo=jogando;
+			}
 		}
 		
 	}

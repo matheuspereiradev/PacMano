@@ -9,7 +9,6 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import com.matheus.entidades.*;
 import com.matheus.game.Jogo;
-import com.matheus.game.Sons;
 import com.matheus.graficos.Spritesheet;
 
 public class Mundo {
@@ -58,8 +57,16 @@ public class Mundo {
 							// Jogo.jogador.setMask(1, 1, 15, 15);
 							// Jogador
 						} else if (pixels[atual] == 0xFF89FFFD) {
-							Inimigo i =new Inimigo(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
-									Jogo.tamanho,Jogo.spritesheet.getSprite(64 , 32, Jogo.tamanho, Jogo.tamanho),1);
+							Inimigo i;
+							if(Jogo.dificuldade==Jogo.facil||Jogo.dificuldade==Jogo.medio) {
+								i=new Inimigo(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
+										Jogo.tamanho,null,1);
+							}else {
+								i =new Inimigo(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
+										Jogo.tamanho,null,2);
+							}
+							
+							
 							Jogo.entidades.add(i);
 							Jogo.inimigo.add(i);
 						} 
@@ -89,16 +96,18 @@ public class Mundo {
 				|| (tiles[x3 + y3 * Mundo.WIDTH_WORD] instanceof WallTile)
 				|| (tiles[x4 + y4 * Mundo.WIDTH_WORD] instanceof WallTile));
 	}
+	
+	
 
 	public static void carregarFase(int level) {
-		if (!Jogo.mute)
-			Sons.proxFase.play();
 
 		Jogo.entidades.clear();
 		Jogo.inimigo.clear();
+		Jogo.frutas.clear();
 
 		Jogo.entidades = new ArrayList<Entidade>();
 		Jogo.inimigo = new ArrayList<Inimigo>();
+		Jogo.frutas = new ArrayList<Fruta>();
 
 		Jogo.spritesheet = new Spritesheet("/Spritesheet.png");
 		Jogo.jogador = new Jogador(35, 29, Jogo.tamanho, Jogo.tamanho,
@@ -142,4 +151,5 @@ public class Mundo {
 			objetos.get(i).renderizar(g);
 		}
 	}
+	
 }

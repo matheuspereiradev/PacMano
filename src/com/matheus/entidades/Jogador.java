@@ -59,7 +59,28 @@ public class Jogador extends Entidade {
 		atualizarCamera();
 		atualizarImagem();
 		verificarColisaoComFruta();
+		verificarColisaoComFantasma();
 		
+	}
+	
+	public void verificarColisaoComFantasma() {
+		for (int i = 0; i < Jogo.inimigo.size(); i++) {// depois melhor criar uma lista somente para life pack
+			Entidade atual = Jogo.inimigo.get(i);
+			if (atual instanceof Inimigo) {
+				if (this.isColidding(this, atual)) {
+					if (Jogo.turno==Jogo.jogadorFugindo) {
+						Jogo.modoJogo=Jogo.game_over;
+					}else if(Jogo.turno==Jogo.inimigoFugindo){
+						Jogo.entidades.remove(atual);
+						Jogo.inimigo.remove(atual);
+						if(Jogo.inimigo.size()==0) {
+							Jogo.modoJogo=Jogo.vitoria;
+						}
+					}
+					
+				}
+			}
+		}
 	}
 	
 	public void verificarColisaoComFruta() {
@@ -67,9 +88,10 @@ public class Jogador extends Entidade {
 			Entidade atual = Jogo.frutas.get(i);
 			if (atual instanceof Fruta) {
 				if (this.isColidding(this, atual)) {
-					Sons.vidaSong.play();
 					Jogo.entidades.remove(atual);
 					Jogo.frutas.remove(atual);
+					Jogo.turno=Jogo.inimigoFugindo;
+					
 				}
 			}
 		}

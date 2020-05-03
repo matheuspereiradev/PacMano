@@ -16,6 +16,7 @@ public class Entidade {
 	public double x, y; 
 	protected BufferedImage sprite;
 	public static BufferedImage SPRITE_FRUTA=Jogo.spritesheet.getSprite(400, 0, 16, 16);
+	public static BufferedImage SPRITE_FANTASMA=Jogo.spritesheet.getSprite(496, 0, 16, 16);
 	public double speed;
 	
 	public static Comparator<Entidade> entidadeSorter = new Comparator<Entidade>() {
