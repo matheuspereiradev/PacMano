@@ -134,9 +134,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		g.dispose();// limpar dados da imagem que nao foram usados
 		g = bs.getDrawGraphics();
 		// desenharRetangulo(40,40);
-
-		
-			g.drawImage(background, 0, 0, WIDITH * SCALE, HEIGHT * SCALE, null);
+        g.drawImage(background, 0, 0, WIDITH * SCALE, HEIGHT * SCALE, null);
 			// TELA COMUM
 		
 		// aqui para ficar em cima da imagem de background
