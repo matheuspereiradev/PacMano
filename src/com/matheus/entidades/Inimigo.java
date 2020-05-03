@@ -16,7 +16,6 @@ public class Inimigo extends Entidade {
 	
 	protected boolean sofrendoDano = false;
 	protected boolean movendo=false;
-	protected double speed;
 	protected List<Node> caminho;
 	private int dir_right = 0, dir_left = 1;
 	private int direcao = dir_right;
@@ -24,7 +23,7 @@ public class Inimigo extends Entidade {
 	private BufferedImage [] andar_left;
 	private BufferedImage [] andar_right;
 	
-	public Inimigo(double x, double y, int width, int height, BufferedImage sprite, int velocidade) {
+	public Inimigo(double x, double y, int width, int height, BufferedImage sprite, double velocidade) {
 		super(x, y, width, height, sprite, velocidade);
 		
 		depth=0;
@@ -46,20 +45,20 @@ public class Inimigo extends Entidade {
 				//int xprev;
 				//int yprev;
 				if(x<target.x*16) {
-					x++;
+					x+=speed;
 					movendo=true;
 					direcao=dir_right;
 				}else if(x>target.x*16) {
-					x--;
+					x-=speed;
 					movendo=true;
 					direcao=dir_left;
 				}
 				
 				if(y<target.y*16) {
-					y++;
+					y+=speed;
 					movendo=true;
 				}else if(y>target.y*16) {
-					y--;
+					y-=speed;
 					movendo=true;
 				}
 				

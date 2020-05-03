@@ -47,7 +47,12 @@ public class Mundo {
 						} else if (pixels[atual] == 0xFFFFFFFF) {
 							tiles[atual] = new WallTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_WALL);
 							// parede
-						} else if (pixels[atual] == 0xFF2A00FF) {
+						}else if (pixels[atual]==0xFFFF0000) {
+							Fruta e = new Fruta(xx*Jogo.tamanho,yy*Jogo.tamanho,16,16,Entidade.SPRITE_FRUTA,0);
+							Jogo.entidades.add(e);
+							Jogo.frutas.add(e);
+						} 
+						else if (pixels[atual] == 0xFF2A00FF) {
 							Jogo.jogador.setX(xx * Jogo.tamanho);
 							Jogo.jogador.setY(yy * Jogo.tamanho);
 							// Jogo.jogador.setMask(1, 1, 15, 15);

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import com.matheus.game.Jogo;
+import com.matheus.game.Sons;
 import com.matheus.mundo.Camera;
 import com.matheus.mundo.Mundo;
 
@@ -56,6 +57,25 @@ public class Jogador extends Entidade {
 		}
 		
 		atualizarCamera();
+		atualizarImagem();
+		verificarColisaoComFruta();
+		
+	}
+	
+	public void verificarColisaoComFruta() {
+		for (int i = 0; i < Jogo.frutas.size(); i++) {// depois melhor criar uma lista somente para life pack
+			Entidade atual = Jogo.frutas.get(i);
+			if (atual instanceof Fruta) {
+				if (this.isColidding(this, atual)) {
+					Sons.vidaSong.play();
+					Jogo.entidades.remove(atual);
+					Jogo.frutas.remove(atual);
+				}
+			}
+		}
+	}
+	
+	public void atualizarImagem() {
 		if (movendo) {
 			movendo=false;
 			pntIndex++;
@@ -67,7 +87,6 @@ public class Jogador extends Entidade {
 				}
 			}
 		}
-		
 	}
 
 	public void renderizar(Graphics g) {

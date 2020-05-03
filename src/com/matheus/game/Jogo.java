@@ -35,6 +35,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	private BufferedImage background;
 	public static List<Entidade> entidades;
 	public static List<Inimigo> inimigo;
+	public static List<Fruta> frutas;
 	public static Spritesheet spritesheet;
 	public static Jogador jogador;
 	public static Mundo mundo;
@@ -75,6 +76,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 
 		entidades = new ArrayList<Entidade>();
 		inimigo = new ArrayList<Inimigo>();
+		frutas=new ArrayList<Fruta>();
 		spritesheet = new Spritesheet("/Spritesheet.png");
 		jogador = new Jogador(0, 0, 16, 16, spritesheet.getSprite(0, 0, tamanho, tamanho),2);
 		entidades.add(jogador);

@@ -15,7 +15,8 @@ public class Entidade {
 	protected int width, height;
 	public double x, y; 
 	protected BufferedImage sprite;
-	public int speed;
+	public static BufferedImage SPRITE_FRUTA=Jogo.spritesheet.getSprite(400, 0, 16, 16);
+	public double speed;
 	
 	public static Comparator<Entidade> entidadeSorter = new Comparator<Entidade>() {
 		@Override
@@ -35,7 +36,7 @@ public class Entidade {
 	// A mascara X e Y dizem o quanto a mascara deve ser movida para baixo e lado
 	// a mascara de tamanho é w e h
 
-	public Entidade(double x, double y, int width, int height, BufferedImage sprite, int velocidade) {
+	public Entidade(double x, double y, int width, int height, BufferedImage sprite, double velocidade) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -112,7 +113,7 @@ public class Entidade {
 	}
 
 	public void renderizar(Graphics g) {
-		//g.drawImage(this.sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		g.drawImage(this.sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 	
 	public double calcularDistancia(int x1,int x2,int y1,int y2) {
