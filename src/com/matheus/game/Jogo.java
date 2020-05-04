@@ -197,10 +197,11 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
         if(modoJogo==apresentacao) {
         	g.setColor(Color.yellow);
 			g.setFont(new Font("arial", Font.BOLD, 70));
-			g.drawString("PACWOMAN!!!", 240, 150);
+			g.drawString("PACW   MAN!!!", 240, 150);
 			g.setColor(Color.white);
 			g.setFont(new Font("arial", Font.BOLD, 50));
 			g.drawString("Clique R para iniciar", 240, 370);
+			g.drawImage(Entidade.SPRITE_PERSONAGEM, 455, 100, SCALE*16, SCALE*16, null);
 			
 			if(dificuldade==facil) {
 				g.drawString("< FÁCIL >", 350, 300);
@@ -213,11 +214,12 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		}else if(modoJogo==game_over) {
 			g.setColor(Color.yellow);
 			g.setFont(new Font("arial", Font.BOLD, 70));
-			g.drawString("PACWOMAN!!!", 240, 150);
+			g.drawString("PACW   MAN!!!", 240, 150);
 			g.setColor(Color.white);
 			g.setFont(new Font("arial", Font.BOLD, 50));
 			g.drawString("GAME OVER!", 300, 250);
 			g.drawString("Clique R para iniciar", 240, 370);
+			g.drawImage(Entidade.SPRITE_PERSONAGEM, 455, 100, SCALE*16, SCALE*16, null);
 			
 			if(dificuldade==facil) {
 				g.drawString("< FÁCIL >", 355, 320);
@@ -230,12 +232,12 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		}else if(modoJogo==vitoria) {
 			g.setColor(Color.yellow);
 			g.setFont(new Font("arial", Font.BOLD, 70));
-			g.drawString("PACWOMAN!!!", 240, 150);
+			g.drawString("PACW   MAN!!!", 240, 150);
 			g.setColor(Color.white);
 			g.setFont(new Font("arial", Font.BOLD, 50));
 			g.drawString("VOCÊ VENCEU!", 300, 250);
 			g.drawString("Clique R para iniciar", 240, 370);
-			
+			g.drawImage(Entidade.SPRITE_PERSONAGEM, 455, 100, SCALE*16, SCALE*16, null);
 			if(dificuldade==facil) {
 				g.drawString("< FÁCIL >", 355, 320);
 			}else if(dificuldade==medio) {
@@ -290,7 +292,6 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 			}
 
 			if (System.currentTimeMillis() - timer >= 1000) {
-				System.out.println("frames"+ frames);
 				frames = 0;
 				timer = System.currentTimeMillis();// atualiza o tempo para o tempo atual
 				// ou timer+=1000; para dizer que se passaram 1000 milesegundos desde o valor

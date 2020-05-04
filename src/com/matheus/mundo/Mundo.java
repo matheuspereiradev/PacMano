@@ -18,6 +18,57 @@ public class Mundo {
 
 	public static int WIDTH_WORD, HEIGHT_WORD;
 
+	public Mundo() {
+		Jogo.jogador.setX(0);
+		Jogo.jogador.setY(0);
+		WIDTH_WORD=40;
+		HEIGHT_WORD=40;
+		tiles=new Tile[WIDTH_WORD*HEIGHT_WORD];
+		
+		for(int xx=0; xx<WIDTH_WORD;xx++) {
+			for(int yy=0;yy<HEIGHT_WORD;yy++) {
+				tiles[xx+yy*WIDTH_WORD]=new WallTile(xx*16,yy*16, Tile.TILE_WALL);	
+			}
+		}
+		
+		int dir=0;
+		int xx=0,yy=0;
+		
+		for(int i=0; i< 400;i++) {
+			tiles[xx+yy*WIDTH_WORD]=new FloorTile(xx*16,yy*16, Tile.TILE_FLOOR);
+			if (dir==0) {
+				//direita
+				if(xx<WIDTH_WORD) {
+					xx++;
+				}
+				
+			}else if(dir ==1) {
+				//esquerda
+				
+				if(xx>0) {
+					xx--;
+				}
+			}else if (dir==2) {
+				//baixo
+				if(yy<HEIGHT_WORD) {
+					yy++;
+				}
+			}else if(dir==3) {
+				//cima
+				if(yy>0) {
+					yy--;
+				}
+			}
+			
+			if(Jogo.rand.nextInt(100)<50) {
+				dir=Jogo.rand.nextInt(4);
+			}
+			
+			
+		};
+			
+	}
+	
 	public Mundo(String path) {
 		objetos = new ArrayList<Objetos>();
 		try {
@@ -130,12 +181,10 @@ public class Mundo {
 				Tile tile = tiles[xx + (yy * WIDTH_WORD)];
 				tile.renderizar(g);
 				
-				System.out.println("TAMANHO:"+tiles.length);
-				System.out.println("tile:"+(xx + (yy * WIDTH_WORD)));
 			}
 		}
 
-		renderizarObjetos(g);
+		
 	}
 
 	

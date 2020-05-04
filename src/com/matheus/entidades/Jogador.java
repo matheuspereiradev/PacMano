@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import com.matheus.game.Jogo;
-import com.matheus.game.Sons;
 import com.matheus.mundo.Camera;
 import com.matheus.mundo.Mundo;
 
