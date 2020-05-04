@@ -32,7 +32,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	private Thread thread;
 	private boolean isRunning;
 	public static JFrame frame;
-	public static final int WIDITH = 300, HEIGHT = 220, SCALE = 3;
+	public static final int WIDITH = 300, HEIGHT = 200, SCALE = 3;
 	private BufferedImage background;
 	public static List<Entidade> entidades;
 	public static List<Inimigo> inimigo;
@@ -42,6 +42,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	public static Mundo mundo;
 	public static Random rand;
 	public static boolean mute = true;
+	public static int numMapa=1;
 	public UI ui;
 	public int[] pixels, luzPixels;
 	public final static int jogadorFugindo=1;
@@ -56,9 +57,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	
 	
 	public Jogo() {
-		if (!mute) {
-			Sons.musica.loop();
-		}
+		
 		rand = new Random();
 		addKeyListener(this);
 		addMouseListener(this);
@@ -83,21 +82,21 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 
 
 	public static void iniciarJogo() {
-
+		numMapa=rand.nextInt(4)+1;
 		entidades = new ArrayList<Entidade>();
 		inimigo = new ArrayList<Inimigo>();
 		frutas=new ArrayList<Fruta>();
 		spritesheet = new Spritesheet("/Spritesheet.png");
 		jogador = new Jogador(0, 0, 16, 16, spritesheet.getSprite(0, 0, tamanho, tamanho),2);
 		entidades.add(jogador);
-		mundo = new Mundo("/nivel1.png");
+		mundo = new Mundo("/"+numMapa+".png");
 		turno=	jogadorFugindo;
 		
 		modoJogo=apresentacao;
-		dificuldade=facil;
 	}
 
 	public static void reiniciarJogo() {
+		numMapa=rand.nextInt(4)+1;
 		Jogo.entidades.clear();
 		Jogo.inimigo.clear();
 		Jogo.frutas.clear();
@@ -108,7 +107,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		spritesheet = new Spritesheet("/Spritesheet.png");
 		Jogo.jogador = new Jogador(0, 0, 16, 16, null,2);
 		Jogo.entidades.add(Jogo.jogador);
-		Jogo.mundo = new Mundo("/nivel1.png");
+		mundo = new Mundo("/"+numMapa+".png");
 		Jogo.turno=	Jogo.jogadorFugindo;
 		Jogo.modoJogo=jogando;
 	}
@@ -174,8 +173,10 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 
 		/* renderização do jogo */
 		// Graphics2D g2 = (Graphics2D) g;
-		mundo.renderizar(g);
-
+		
+		if(modoJogo==jogando) {
+			mundo.renderizar(g);
+		}
 		Collections.sort(entidades, Entidade.entidadeSorter);
 
 		for (int i = 0; i < entidades.size(); i++) {
@@ -245,7 +246,10 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		}else {
 			ui.renderizar(g);
 		}
-        
+        g.setColor(Color.yellow);
+		g.setFont(new Font("arial", Font.BOLD, 20));
+		g.drawString("By MatheusPereiraDev", 670, 590);
+		
 		bs.show();
 	}
 

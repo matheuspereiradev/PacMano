@@ -15,7 +15,8 @@ public class Entidade {
 	protected int width, height;
 	public double x, y; 
 	protected BufferedImage sprite;
-	public static BufferedImage SPRITE_FRUTA=Jogo.spritesheet.getSprite(400, 0, 16, 16);
+	public static BufferedImage SPRITE_FRUTA_LARANJA=Jogo.spritesheet.getSprite(400, 0, 16, 16);
+	public static BufferedImage SPRITE_FRUTA_MACA=Jogo.spritesheet.getSprite(416, 0, 16, 16);
 	public static BufferedImage SPRITE_FANTASMA=Jogo.spritesheet.getSprite(496, 0, 16, 16);
 	public double speed;
 	

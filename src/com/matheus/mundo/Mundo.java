@@ -47,7 +47,13 @@ public class Mundo {
 							tiles[atual] = new WallTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_WALL);
 							// parede
 						}else if (pixels[atual]==0xFFFF0000) {
-							Fruta e = new Fruta(xx*Jogo.tamanho,yy*Jogo.tamanho,16,16,Entidade.SPRITE_FRUTA,0);
+							Fruta e;
+							if(Jogo.rand.nextInt(100) < 30) {
+							e = new Fruta(xx*Jogo.tamanho,yy*Jogo.tamanho,16,16,Entidade.SPRITE_FRUTA_MACA,0);
+							}else {
+								e = new Fruta(xx*Jogo.tamanho,yy*Jogo.tamanho,16,16,Entidade.SPRITE_FRUTA_LARANJA,0);	
+							}
+							
 							Jogo.entidades.add(e);
 							Jogo.frutas.add(e);
 						} 
@@ -58,15 +64,8 @@ public class Mundo {
 							// Jogador
 						} else if (pixels[atual] == 0xFF89FFFD) {
 							Inimigo i;
-							if(Jogo.dificuldade==Jogo.facil||Jogo.dificuldade==Jogo.medio) {
 								i=new Inimigo(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
 										Jogo.tamanho,null,1);
-							}else {
-								i =new Inimigo(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
-										Jogo.tamanho,null,2);
-							}
-							
-							
 							Jogo.entidades.add(i);
 							Jogo.inimigo.add(i);
 						} 
@@ -130,6 +129,9 @@ public class Mundo {
 				}
 				Tile tile = tiles[xx + (yy * WIDTH_WORD)];
 				tile.renderizar(g);
+				
+				System.out.println("TAMANHO:"+tiles.length);
+				System.out.println("tile:"+(xx + (yy * WIDTH_WORD)));
 			}
 		}
 
