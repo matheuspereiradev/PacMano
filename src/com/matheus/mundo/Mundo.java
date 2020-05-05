@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import com.matheus.entidades.*;
 import com.matheus.game.Jogo;
 import com.matheus.graficos.Spritesheet;
+import com.utils.Posicao;
 
 public class Mundo {
 
@@ -94,6 +95,11 @@ public class Mundo {
 						if (pixels[atual] == 0xFF000000) {
 							tiles[atual] = new FloorTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_FLOOR);
 							// chao
+							
+							//adiciona a posiçao nas sorteaveis
+							
+							Jogo.posicoes.add(new Posicao(xx, yy));
+							
 						} else if (pixels[atual] == 0xFFFFFFFF) {
 							tiles[atual] = new WallTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_WALL);
 							// parede
@@ -115,8 +121,14 @@ public class Mundo {
 							// Jogador
 						} else if (pixels[atual] == 0xFF89FFFD) {
 							Inimigo i;
+							
+							if(Jogo.dificuldade==Jogo.dificil) {
+								i=new Inimigo(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
+										Jogo.tamanho,null,2);
+							}else {
 								i=new Inimigo(xx * Jogo.tamanho, yy * Jogo.tamanho, Jogo.tamanho,
 										Jogo.tamanho,null,1);
+							}	
 							Jogo.entidades.add(i);
 							Jogo.inimigo.add(i);
 						} 

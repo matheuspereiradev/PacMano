@@ -18,10 +18,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JFrame;
+import javax.swing.text.Segment;
+
 import com.matheus.entidades.*;
 import com.matheus.graficos.Spritesheet;
 import com.matheus.graficos.UI;
 import com.matheus.mundo.*;
+import com.utils.Posicao;
 
 public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener {
 
@@ -37,6 +40,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	public static List<Entidade> entidades;
 	public static List<Inimigo> inimigo;
 	public static List<Fruta> frutas;
+	public static List<Posicao> posicoes;
 	public static Spritesheet spritesheet;
 	public static Jogador jogador;
 	public static Mundo mundo;
@@ -54,6 +58,10 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 	
 	public static int dificuldade;
 	public static final int facil=0, medio=1, dificil=2;
+	public int tickFrutas=0;
+	public static int segFrutas;
+	public static final int SEG_FRUTA_FACIL=20;
+	public static final int SEG_FRUTA_MEDIO=45;
 	
 	
 	public Jogo() {
@@ -86,6 +94,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		entidades = new ArrayList<Entidade>();
 		inimigo = new ArrayList<Inimigo>();
 		frutas=new ArrayList<Fruta>();
+		posicoes=new ArrayList<Posicao>();
 		spritesheet = new Spritesheet("/Spritesheet.png");
 		jogador = new Jogador(0, 0, 16, 16, spritesheet.getSprite(0, 0, tamanho, tamanho),2);
 		entidades.add(jogador);
@@ -100,16 +109,24 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		Jogo.entidades.clear();
 		Jogo.inimigo.clear();
 		Jogo.frutas.clear();
+		Jogo.posicoes.clear();
 		
 		Jogo.entidades = new ArrayList<Entidade>();
 		Jogo.inimigo = new ArrayList<Inimigo>();
 		Jogo.frutas=new ArrayList<Fruta>();
+		posicoes=new ArrayList<Posicao>();
 		spritesheet = new Spritesheet("/Spritesheet.png");
 		Jogo.jogador = new Jogador(0, 0, 16, 16, null,2);
 		Jogo.entidades.add(Jogo.jogador);
 		mundo = new Mundo("/"+numMapa+".png");
 		Jogo.turno=	Jogo.jogadorFugindo;
 		Jogo.modoJogo=jogando;
+		
+		if(dificuldade==facil) {
+		   segFrutas=SEG_FRUTA_FACIL;
+		}else if(dificuldade==medio) {
+			segFrutas=SEG_FRUTA_MEDIO;
+		}
 	}
 	
 	public void iniciarFrame() {
@@ -131,8 +148,20 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 				e.atualizar();
 		    }
 			
-			if(Jogo.frutas.size()==0 && turno==jogadorFugindo) {
-				Jogo.modoJogo=game_over;
+			
+			//SE FOR DIFICIL ELE SO TEM UM TOTAL DE FRUTAS 12 E MORRE QND ACABAR
+			if(dificuldade==dificil) {
+				if(Jogo.frutas.size()==0 && turno==jogadorFugindo) {
+					Jogo.modoJogo=game_over;
+				}
+				//SE FOR MEDIO E FACIL ELES MUDAM O TEMPO DE GERAÇAO
+			}else {
+				if(dificuldade==facil) {
+					atualizarRelogioDasFrutas(SEG_FRUTA_FACIL);
+				}else if(dificuldade==medio) {
+					atualizarRelogioDasFrutas(SEG_FRUTA_MEDIO);
+				}
+				
 			}
 			
 			/////////////////////muda turno
@@ -143,12 +172,26 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 			}
 			
 			
+			
 		}
 
 		ui.atualizar();
 		
 		
 			
+	}
+	
+	public void atualizarRelogioDasFrutas(int total) {
+		tickFrutas++;
+		if(tickFrutas==60) {
+			tickFrutas=0;
+			segFrutas--;
+			if(segFrutas==0) {
+				Fruta.atualizaPosicaoDasFrutas();
+				segFrutas=total;
+			}
+			
+		}
 	}
 	
 	public void verificaTurno(int total) {
@@ -247,11 +290,16 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 			}
 		}else {
 			ui.renderizar(g);
+			if(dificuldade!=dificil)
+			  g.drawString("00:"+String.format("%02d", Jogo.segFrutas), 460, 72);
 		}
         g.setColor(Color.yellow);
 		g.setFont(new Font("arial", Font.BOLD, 20));
 		g.drawString("By MatheusPereiraDev", 670, 590);
+
+
 		
+	
 		bs.show();
 	}
 
@@ -277,7 +325,6 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		double ns = 1000000000 / amountOfTicks;// "constante" do momento certo do update do jogo para ficar na
 												// quantidade de fps descritas no amountOfTicks
 		double delta = 0;
-		int frames = 0;
 		double timer = System.currentTimeMillis();
 		while (isRunning) {
 			long now = System.nanoTime();// tempo atual
@@ -287,12 +334,11 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 			if (delta >= 1) {
 				atualizar();
 				renderizar();
-				frames++;
 				delta--;
 			}
 
 			if (System.currentTimeMillis() - timer >= 1000) {
-				frames = 0;
+				
 				timer = System.currentTimeMillis();// atualiza o tempo para o tempo atual
 				// ou timer+=1000; para dizer que se passaram 1000 milesegundos desde o valor
 				// inicial do timer
@@ -354,6 +400,7 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 			if (modoJogo==game_over|| modoJogo==vitoria) {
 				reiniciarJogo();
 			}else if(modoJogo==apresentacao) {
+				iniciarJogo();
 				modoJogo=jogando;
 			}
 		}

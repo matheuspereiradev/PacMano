@@ -73,7 +73,7 @@ public class Jogador extends Entidade {
 						Jogo.entidades.remove(atual);
 						Jogo.inimigo.remove(atual);
 						if(Jogo.inimigo.size()==0) {
-							Jogo.modoJogo=Jogo.vitoria;
+						Jogo.modoJogo=Jogo.vitoria;
 						}
 					}
 					
@@ -90,7 +90,6 @@ public class Jogador extends Entidade {
 					Jogo.entidades.remove(atual);
 					Jogo.frutas.remove(atual);
 					Jogo.turno=Jogo.inimigoFugindo;
-					
 				}
 			}
 		}

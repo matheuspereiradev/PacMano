@@ -9,8 +9,6 @@ import com.matheus.mundo.Camera;
 import com.matheus.mundo.Mundo;
 
 public class Entidade {
-
-	
 	
 	protected int width, height;
 	public double x, y; 
