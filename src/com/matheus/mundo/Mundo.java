@@ -104,12 +104,7 @@ public class Mundo {
 							tiles[atual] = new WallTile(xx * Jogo.tamanho, yy * Jogo.tamanho, Tile.TILE_WALL);
 							// parede
 						}else if (pixels[atual]==0xFFFF0000) {
-							Fruta e;
-							if(Jogo.rand.nextInt(100) < 30) {
-							e = new Fruta(xx*Jogo.tamanho,yy*Jogo.tamanho,16,16,Entidade.SPRITE_FRUTA_MACA,0);
-							}else {
-								e = new Fruta(xx*Jogo.tamanho,yy*Jogo.tamanho,16,16,Entidade.SPRITE_FRUTA_LARANJA,0);	
-							}
+							Fruta e = new Fruta(xx*Jogo.tamanho,yy*Jogo.tamanho,16,16,Entidade.SPRITE_FRUTA_LARANJA,0);	
 							
 							Jogo.entidades.add(e);
 							Jogo.frutas.add(e);

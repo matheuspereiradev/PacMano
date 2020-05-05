@@ -18,8 +18,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JFrame;
-import javax.swing.text.Segment;
-
 import com.matheus.entidades.*;
 import com.matheus.graficos.Spritesheet;
 import com.matheus.graficos.UI;
@@ -397,11 +395,8 @@ public class Jogo extends Canvas implements Runnable, KeyListener, MouseListener
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_R) {
-			if (modoJogo==game_over|| modoJogo==vitoria) {
+			if (modoJogo==game_over|| modoJogo==vitoria || modoJogo==apresentacao) {
 				reiniciarJogo();
-			}else if(modoJogo==apresentacao) {
-				iniciarJogo();
-				modoJogo=jogando;
 			}
 		}
 		
